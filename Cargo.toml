@@ -7,3 +7,8 @@ edition = "2021"
 
 [dependencies]
 gtk = { version = "0.6.4", package = "gtk4", features = ["v4_8"] }
+
+# actions
+[[bin]]
+name = "examples0"
+path = "examples0/main.rs"

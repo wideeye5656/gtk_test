@@ -5,6 +5,7 @@ use gtk::Orientation;
 use gtk::{glib, Application, ApplicationWindow, Button};
 use std::cell::Cell;
 use std::rc::Rc;
+use gtk::glib::clone;
 
 const APP_ID: &str = "MemoryManagement_Sample";
 
@@ -36,9 +37,18 @@ fn build_ui(application:&Application) {
 
     let number = Rc::new(Cell::new(0));
 
-    let number_copy = number.clone();
-    button_increase.connect_clicked(move |_| number_copy.set(number_copy.get() + 1));
-    button_decrease.connect_clicked(move |_| number.set(number.get() - 1));
+    //let number_copy = number.clone();
+    button_increase.connect_clicked(clone!(@weak number, @weak button_decrease =>
+        move |_| {
+            number.set(number.get() + 1);
+            button_decrease.set_label(&number.get().to_string());
+    }));
+    
+    button_decrease.connect_clicked(clone!(@weak button_increase =>
+        move |_| {
+            number.set(number.get() - 1);
+            button_increase.set_label(&number.get().to_string());
+        }));
 
     let gtk_box = gtk::Box::builder()
         .orientation(Orientation::Vertical)
