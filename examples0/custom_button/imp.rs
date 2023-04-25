@@ -10,3 +10,9 @@ impl ObjectSubclass for CustomButton {
     type Type = super::CustomButton;
     type ParentType = gtk::Button;
 }
+
+impl ObjectImpl for CustomButton {}
+
+impl WidgetImpl for CustomButton {}
+
+impl ButtonImpl for CustomButton {}
